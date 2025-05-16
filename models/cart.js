@@ -1,33 +1,33 @@
 const mongoose = require('mongoose');
 
 // Définition du schéma
-const CardsSchema = new mongoose.Schema({
-    // Ici, tu définis les champs que ton modèle Cart va utiliser
-    userId: {
+const cartSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  items: [
+    {
+      productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Référence à l'utilisateur si tu en as un
+        ref: 'Product',
         required: true
-    },
-    items: [
-        {
-            productId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Product', // Référence à un produit si tu en as un
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            }
-        }
-    ],
-    totalAmount: {
+      },
+      quantity: {
         type: Number,
         required: true
+      }
     }
+  ],
+  totalAmount: {
+    type: Number,
+    required: true
+  }
 }, { timestamps: true });
 
 // Création du modèle Cart
-const Cart = mongoose.model('Cart', CardsSchema);
+const Cart = mongoose.model('Cart', cartSchema);
 
+// Export du modèle Cart
 module.exports = Cart;
